@@ -1,0 +1,9 @@
+<div{{ attributes }}>
+    <!-- component html -->
+    <div> Question: {{ correctFlag|country_name }} </div>
+    {% for flag in possibleFlags %}
+        <div class="flag">
+            {{ (':' ~ flag|lower ~ ':') | emojify }}
+        </div>
+    {% endfor %}
+</div>
