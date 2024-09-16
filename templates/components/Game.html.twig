@@ -1,9 +1,18 @@
 <div{{ attributes }}>
+
+    <div>
+       Score : {{ score }} / {{ questions }}
+    </div>
     <!-- component html -->
-    <div> Question: {{ correctFlag|country_name }} </div>
-    {% for flag in possibleFlags %}
-        <div class="flag">
-            {{ (':' ~ flag|lower ~ ':') | emojify }}
-        </div>
-    {% endfor %}
+    <div class="has-text-centered is-size-4"> Question: {{ correctFlag|country_name }} </div>
+    <div class="columns">
+        {% for flag in possibleFlags %}
+            <div class="column has-text-centered is-size-4">
+                <a data-action="live#action"
+                   data-live-action-param="check"
+                   data-live-flag-param="{{ flag }}"
+                >{{ (':' ~ flag|lower ~ ':') | emojify }}</a>
+            </div>
+        {% endfor %}
+    </div>
 </div>
