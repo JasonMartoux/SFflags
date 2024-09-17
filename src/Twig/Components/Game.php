@@ -14,6 +14,7 @@ final class Game
 {
   use DefaultActionTrait;
 
+  public const MAX_QUESTIONS = 5;
   public array $countries;
   #[LiveProp]
   public array $possibleFlags;
@@ -40,9 +41,17 @@ final class Game
   #[LiveAction]
   public function check(#[LiveArg] string $flag): void
   {
+    if($this->questions >= self::MAX_QUESTIONS) {
+      return;
+    }
+
     if ($flag === $this->correctFlag) {
       $this->score++;
     }
     $this->questions++;
+
+    sleep(1);
+
+    $this->getQuestion();
   }
 }

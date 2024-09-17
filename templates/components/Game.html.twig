@@ -1,18 +1,31 @@
-<div{{ attributes }}>
+<div class="container"{{ attributes }}>
+    <div class="columns is-centered">
+        <div class="sub-section">
+            <h3 class="title ">Flag Quiz</h3>
+            <h4 class="subtitle "> Click on the flag to check it : </h4>
+            <h4 class="subtitle "> Score : {{ score }} / {{ questions }} </h4>
 
-    <div>
-       Score : {{ score }} / {{ questions }}
-    </div>
-    <!-- component html -->
-    <div class="has-text-centered is-size-4"> Question: {{ correctFlag|country_name }} </div>
-    <div class="columns">
-        {% for flag in possibleFlags %}
-            <div class="column has-text-centered is-size-4">
-                <a data-action="live#action"
-                   data-live-action-param="check"
-                   data-live-flag-param="{{ flag }}"
-                >{{ (':' ~ flag|lower ~ ':') | emojify }}</a>
+            <div class="has-text-centered  is-size-3"> Question: {{ correctFlag|country_name }} </div>
+            <div class="columns is-size-1">
+                {% if questions >= constant('MAX_QUESTIONS', this) %}
+                    <div class="modal is-active">
+                        <div class="modal-background"></div>
+                        <div class="modal-content">
+                            <div class="box has-text-centered">
+                                Your score is {{ score }} / {{ questions }}
+                            </div>
+                        </div>
+                        <button class="modal-close is-large" aria-label="close"></button>
+                    </div>
+                {% endif %}
+                {% for flag in possibleFlags %}
+                    <div class="column has-text-centered block"
+                         data-loading="addClass({{ flag == correctFlag ? 'has-background-success' : 'has-background-danger' }})">
+                        <a data-action="live#action" data-live-action-param="check"
+                           data-live-flag-param="{{ flag }}">{{ (':' ~ flag|lower ~ ':') | emojify }}</a>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
     </div>
 </div>
